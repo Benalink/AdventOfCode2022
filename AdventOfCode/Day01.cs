@@ -1,15 +1,22 @@
 ﻿namespace AdventOfCode;
 
-public class Day01 : BaseDay
+public sealed class Day01 : BaseDay
 {
-    private readonly string _input;
+    private readonly string input;
 
     public Day01()
     {
-        _input = File.ReadAllText(InputFilePath);
+        this.input = File.ReadAllText(this.InputFilePath);
     }
 
-    public override ValueTask<string> Solve_1() => new($"Solution to {ClassPrefix} {CalculateIndex()}, part 1");
+    private IEnumerable<int> CalculateCalories() =>
+        this.input.Split("\n\n")
+            .Select(elf => elf.Split('\n')
+                .Select(int.Parse)
+                .Sum());
 
-    public override ValueTask<string> Solve_2() => new($"Solution to {ClassPrefix} {CalculateIndex()}, part 2");
+    public override ValueTask<string> Solve_1() => new(CalculateCalories().Max().ToString());
+
+    public override ValueTask<string> Solve_2() =>
+        new(CalculateCalories().OrderByDescending(c => c).Take(3).Sum().ToString());
 }
