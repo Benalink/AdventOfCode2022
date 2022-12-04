@@ -24,11 +24,8 @@ public sealed class Day04 : BaseDay
 
     public override ValueTask<string> Solve_1()
     {
-        int fullyContainedCount = ParseInput().Count(pair =>
-        {
-            int minLength = Math.Min(pair.A.Length, pair.B.Length);
-            return pair.A.Intersect(pair.B).Count() == minLength;
-        });
+        int fullyContainedCount = ParseInput()
+            .Count(pair => pair.A.Intersect(pair.B).Count() == Math.Min(pair.A.Length, pair.B.Length));
 
         return new ValueTask<string>(fullyContainedCount.ToString());
     }
@@ -39,4 +36,3 @@ public sealed class Day04 : BaseDay
         return new ValueTask<string>(overlapsCount.ToString());
     }
 }
-
