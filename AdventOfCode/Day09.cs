@@ -29,10 +29,11 @@ public sealed class Day09 : BaseDay
             {
                 RopeState last = state.Latest;
                 RopeState workingState = last with { Head = last.Head + cmd.Direction };
+                Vector2[] workingTails = workingState.Tails.ToArray();
 
                 for (int t = 0; t < last.Tails.Length; t++)
                 {
-                    Vector2 tail = workingState.Tails[t];
+                    Vector2 tail = workingTails[t];
                     Vector2 head = workingState.Head;
                     if (t > 0)
                     {
@@ -46,9 +47,8 @@ public sealed class Day09 : BaseDay
                     {
                         Vector2 clampedTailDelta = ClampTailDelta(tailDelta);
                         Vector2 updatedTail = tail + clampedTailDelta;
-                        Vector2[] tails = workingState.Tails.ToArray();
-                        tails[t] = updatedTail;
-                        workingState = workingState with { Tails = tails };
+                        workingTails[t] = updatedTail;
+                        workingState = workingState with { Tails = workingTails };
                     }
                 }
                 
